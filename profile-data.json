@@ -1,0 +1,78 @@
+{
+  "username": "bharatjidubey",
+  "name": "Bharat Ji Dubey",
+  "title": "B.Tech CSE (AI & ML) Undergraduate",
+  "tagline": "Software Developer • AI Enthusiast",
+  "bio": "Building AI-powered applications • Learning DSA in Python • Open to Software Development & AI/ML Internships",
+  "typing_lines": [
+    "Software Developer",
+    "AI & Machine Learning Student",
+    "Building Real-World Projects",
+    "Open to Internship Opportunities"
+  ],
+  "about": "I'm Bharat Ji Dubey, a B.Tech CSE (AI & ML) undergraduate at Chandigarh University (2025–2029). I enjoy building practical software, AI-powered applications, and modern web solutions while continuously improving my software engineering skills.",
+  "quick_info": {
+    "university": "Chandigarh University",
+    "degree": "B.Tech CSE (AI & ML)",
+    "location": "Uttar Pradesh, India",
+    "looking_for": "Software Development & AI/ML Internships",
+    "learning": "DSA in Python",
+    "building": "AI Finance Manager"
+  },
+  "tech_stack": {
+    "Languages": ["Python", "C", "Java", "HTML5", "CSS3", "JavaScript"],
+    "AI & ML": ["TensorFlow", "PyTorch", "OpenAI", "HuggingFace"],
+    "Backend & Database": ["FastAPI", "Node.js", "Firebase", "MySQL"],
+    "Developer Tools": ["Git", "GitHub", "Docker", "VS Code"]
+  },
+  "projects": [
+    {
+      "emoji": "🏋️",
+      "name": "DEADRYX",
+      "description": "A fitness platform that helps users track workouts, monitor progress, and preserve transformation memories.",
+      "features": [
+        "Google Authentication",
+        "Google Drive Integration",
+        "Workout Tracking",
+        "Responsive Design"
+      ],
+      "repo": "https://github.com/bharatjidubey/DEADRYX",
+      "live": "https://deadryx.me",
+      "status": "live"
+    },
+    {
+      "emoji": "🤖",
+      "name": "AI Finance Manager",
+      "description": "An AI-powered finance application for expense tracking, budgeting, and financial insights.",
+      "features": [],
+      "repo": "",
+      "live": "",
+      "status": "in-development"
+    }
+  ],
+  "hackathons": [
+    {
+      "name": "Hack with Uttar Pradesh 2025",
+      "emoji": "🥈",
+      "placement": "Second Place",
+      "description": "Built a freelancing platform connecting students and programmers with enterprise opportunities."
+    }
+  ],
+  "certifications": [],
+  "goals": [
+    "Build production-ready AI applications",
+    "Improve DSA skills",
+    "Contribute to Open Source",
+    "Secure an Internship"
+  ],
+  "social": {
+    "github": "https://github.com/bharatjidubey",
+    "linkedin": "https://www.linkedin.com/in/bharatjid/",
+    "email": "bharatjid021@gmail.com",
+    "portfolio": ""
+  },
+  "stats_theme": "tokyonight",
+  "show_snake": true,
+  "show_metrics": true,
+  "show_trophy": true
+}

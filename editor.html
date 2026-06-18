@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Profile Editor — Bharat Ji Dubey</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ─── RESET & BASE ────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #1c2333;
+      --bg-card: #21262d;
+      --border: #30363d;
+      --border-hover: #484f58;
+      --text-primary: #f0f6fc;
+      --text-secondary: #c9d1d9;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --accent-glow: rgba(88, 166, 255, 0.15);
+      --success: #3fb950;
+      --warning: #d29922;
+      --danger: #f85149;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── LAYOUT ──────────────────────────────────────────────────── */
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ─── SIDEBAR ─────────────────────────────────────────────────── */
+    .sidebar {
+      width: 260px;
+      min-width: 260px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 10;
+    }
+
+    .sidebar-brand {
+      padding: 24px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-brand h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-brand h1 .icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), #a855f7);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .sidebar-brand p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      padding-left: 42px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 12px 8px;
+      overflow-y: auto;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 12px 12px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+      margin-bottom: 2px;
+    }
+
+    .nav-item:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .nav-item.active {
+      background: var(--accent-glow);
+      color: var(--accent);
+      border-color: rgba(88, 166, 255, 0.2);
+    }
+
+    .nav-item .nav-icon { font-size: 18px; width: 24px; text-align: center; }
+
+    /* ─── SIDEBAR ACTIONS ─────────────────────────────────────────── */
+    .sidebar-actions {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* ─── MAIN CONTENT ────────────────────────────────────────────── */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .topbar {
+      height: 60px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .topbar-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .content {
+      flex: 1;
+      padding: 32px;
+      max-width: 900px;
+    }
+
+    /* ─── BUTTONS ─────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: all var(--transition);
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-secondary);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+      border-color: var(--border-hover);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: #fff;
+      border-color: var(--success);
+    }
+
+    .btn-success:hover {
+      background: #46d160;
+      box-shadow: 0 0 20px rgba(63, 185, 80, 0.25);
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border-color: var(--danger);
+    }
+
+    .btn-danger:hover {
+      background: rgba(248, 81, 73, 0.1);
+    }
+
+    .btn-sm { padding: 6px 12px; font-size: 12px; }
+
+    .btn-block { width: 100%; }
+
+    /* ─── FORM ELEMENTS ───────────────────────────────────────────── */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .form-group .hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 10px 14px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      transition: all var(--transition);
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    textarea { resize: vertical; min-height: 80px; }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b949e' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+
+    /* ─── SECTION CARDS ───────────────────────────────────────────── */
+    .section-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-bottom: 24px;
+      transition: border-color var(--transition);
+    }
+
+    .section-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    .section-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-card h3 .badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--accent-glow);
+      color: var(--accent);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* ─── CHIPS / TAGS ────────────────────────────────────────────── */
+    .chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all var(--transition);
+      user-select: none;
+    }
+
+    .chip:hover { border-color: var(--border-hover); }
+
+    .chip.selected {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .chip .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* ─── LIST ITEMS (Projects, Hackathons, etc.) ─────────────────── */
+    .list-item {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 12px;
+      position: relative;
+      transition: border-color var(--transition);
+    }
+
+    .list-item:hover { border-color: var(--border-hover); }
+
+    .list-item-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .list-item-header h4 {
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .list-item-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .remove-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all var(--transition);
+    }
+
+    .remove-btn:hover {
+      background: rgba(248, 81, 73, 0.1);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    /* ─── FEATURE TAGS INPUT ──────────────────────────────────────── */
+    .tags-input-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      min-height: 42px;
+      align-items: center;
+      cursor: text;
+      transition: all var(--transition);
+    }
+
+    .tags-input-wrapper:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(88, 166, 255, 0.3);
+      border-radius: 20px;
+      font-size: 12px;
+      color: var(--accent);
+    }
+
+    .tag .tag-remove {
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.15s;
+    }
+
+    .tag .tag-remove:hover { opacity: 1; }
+
+    .tags-input-wrapper input {
+      border: none;
+      background: none;
+      outline: none;
+      color: var(--text-primary);
+      font-size: 13px;
+      flex: 1;
+      min-width: 120px;
+      padding: 4px;
+    }
+
+    /* ─── PREVIEW PANEL ───────────────────────────────────────────── */
+    .preview-panel {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: calc(100% - 260px);
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      z-index: 20;
+      transition: height 0.3s ease;
+      overflow: hidden;
+    }
+
+    .preview-panel.collapsed { height: 44px; }
+    .preview-panel.expanded { height: 50vh; }
+
+    .preview-header {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      user-select: none;
+    }
+
+    .preview-header:hover { background: var(--bg-tertiary); }
+
+    .preview-header span {
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .preview-content {
+      height: calc(100% - 44px);
+      overflow: auto;
+      padding: 20px;
+    }
+
+    .preview-content pre {
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+      font-size: 12px;
+      color: var(--text-secondary);
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.6;
+    }
+
+    /* ─── TAB CONTENT ─────────────────────────────────────────────── */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ─── TOAST ────────────────────────────────────────────────────── */
+    .toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 14px 24px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 100;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toast.show { transform: translateX(0); }
+
+    .toast.success {
+      background: rgba(63, 185, 80, 0.15);
+      border: 1px solid var(--success);
+      color: var(--success);
+    }
+
+    .toast.error {
+      background: rgba(248, 81, 73, 0.15);
+      border: 1px solid var(--danger);
+      color: var(--danger);
+    }
+
+    /* ─── STATUS BADGE ────────────────────────────────────────────── */
+    .status-select {
+      display: inline-flex;
+      gap: 8px;
+    }
+
+    .status-option {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--bg-primary);
+      color: var(--text-muted);
+      transition: all var(--transition);
+    }
+
+    .status-option.active-live {
+      background: rgba(63, 185, 80, 0.15);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .status-option.active-dev {
+      background: rgba(210, 153, 34, 0.15);
+      border-color: var(--warning);
+      color: var(--warning);
+    }
+
+    /* ─── TOGGLE SWITCH ───────────────────────────────────────────── */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toggle-row:last-child { border-bottom: none; }
+
+    .toggle-label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .toggle-label small {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .toggle input { display: none; }
+
+    .toggle-slider {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: all var(--transition);
+    }
+
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: all var(--transition);
+    }
+
+    .toggle input:checked + .toggle-slider {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .toggle input:checked + .toggle-slider::before {
+      transform: translateX(20px);
+      background: #fff;
+    }
+
+    /* ─── SCROLLBAR ───────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--border-hover); }
+
+    /* ─── ANIMATIONS ──────────────────────────────────────────────── */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tab-content.active {
+      animation: fadeIn 0.25s ease;
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .preview-panel { width: 100%; }
+      .row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ─── SIDEBAR ──────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <h1><span class="icon">✏️</span> Profile Editor</h1>
+      <p>Edit & regenerate your README</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-label">Sections</div>
+      <div class="nav-item active" data-tab="personal">
+        <span class="nav-icon">👤</span> Personal Info
+      </div>
+      <div class="nav-item" data-tab="techstack">
+        <span class="nav-icon">🛠️</span> Tech Stack
+      </div>
+      <div class="nav-item" data-tab="projects">
+        <span class="nav-icon">🚀</span> Projects
+      </div>
+      <div class="nav-item" data-tab="hackathons">
+        <span class="nav-icon">🏆</span> Hackathons
+      </div>
+      <div class="nav-item" data-tab="goals">
+        <span class="nav-icon">🎯</span> Goals
+      </div>
+      <div class="nav-item" data-tab="settings">
+        <span class="nav-icon">⚙️</span> Settings
+      </div>
+    </nav>
+
+    <div class="sidebar-actions">
+      <button class="btn btn-secondary btn-block" onclick="loadProfileData()">📂 Load profile-data.json</button>
+      <button class="btn btn-primary btn-block" onclick="downloadReadme()">📄 Download README.md</button>
+      <button class="btn btn-success btn-block" onclick="downloadProfileData()">💾 Save profile-data.json</button>
+    </div>
+  </aside>
+
+  <!-- ─── MAIN ─────────────────────────────────────────────── -->
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">👤 Personal Info</div>
+      <div class="topbar-actions">
+        <button class="btn btn-secondary btn-sm" onclick="loadProfileData()">📂 Load JSON</button>
+        <button class="btn btn-primary btn-sm" onclick="downloadReadme()">📄 README</button>
+        <button class="btn btn-success btn-sm" onclick="downloadProfileData()">💾 Save</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ═══ TAB: PERSONAL INFO ═══════════════════════════════ -->
+      <div class="tab-content active" id="tab-personal">
+        <div class="section-card">
+          <h3>🪪 Identity</h3>
+          <div class="row">
+            <div class="form-group">
+              <label>GitHub Username</label>
+              <input type="text" id="f-username" placeholder="bharatjidubey">
+            </div>
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" id="f-name" placeholder="Bharat Ji Dubey">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" id="f-title" placeholder="B.Tech CSE (AI & ML) Undergraduate">
+            </div>
+            <div class="form-group">
+              <label>Tagline</label>
+              <input type="text" id="f-tagline" placeholder="Software Developer • AI Enthusiast">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Bio (one line)</label>
+            <input type="text" id="f-bio" placeholder="Building AI-powered applications • Learning DSA...">
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>📝 About Me</h3>
+          <div class="form-group">
+            <label>About Paragraph</label>
+            <textarea id="f-about" rows="3" placeholder="I'm Bharat Ji Dubey, a B.Tech CSE..."></textarea>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>📋 Quick Info</h3>
+          <div class="row">
+            <div class="form-group">
+              <label>🎓 University</label>
+              <input type="text" id="f-university" placeholder="Chandigarh University">
+            </div>
+            <div class="form-group">
+              <label>📚 Degree</label>
+              <input type="text" id="f-degree" placeholder="B.Tech CSE (AI & ML)">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label>📍 Location</label>
+              <input type="text" id="f-location" placeholder="Uttar Pradesh, India">
+            </div>
+            <div class="form-group">
+              <label>💼 Looking For</label>
+              <input type="text" id="f-looking-for" placeholder="Software Development & AI/ML Internships">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label>🌱 Currently Learning</label>
+              <input type="text" id="f-learning" placeholder="DSA in Python">
+            </div>
+            <div class="form-group">
+              <label>🚀 Currently Building</label>
+              <input type="text" id="f-building" placeholder="AI Finance Manager">
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>🔗 Social Links</h3>
+          <div class="row">
+            <div class="form-group">
+              <label>GitHub URL</label>
+              <input type="url" id="f-github" placeholder="https://github.com/bharatjidubey">
+            </div>
+            <div class="form-group">
+              <label>LinkedIn URL</label>
+              <input type="url" id="f-linkedin" placeholder="https://www.linkedin.com/in/bharatjid/">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" id="f-email" placeholder="bharatjid021@gmail.com">
+            </div>
+            <div class="form-group">
+              <label>Portfolio URL (leave blank to hide)</label>
+              <input type="url" id="f-portfolio" placeholder="https://yourportfolio.com">
+            </div>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>⌨️ Typing Animation Lines</h3>
+          <div class="hint" style="margin-bottom:12px; font-size:12px; color:var(--text-muted);">These rotate in the animated typing header on your profile.</div>
+          <div id="typing-lines-list"></div>
+          <button class="btn btn-secondary btn-sm" onclick="addTypingLine()">+ Add Line</button>
+        </div>
+      </div>
+
+      <!-- ═══ TAB: TECH STACK ══════════════════════════════════ -->
+      <div class="tab-content" id="tab-techstack">
+        <div class="section-card">
+          <h3>💻 Languages</h3>
+          <div class="chips-container" id="chips-languages"></div>
+        </div>
+        <div class="section-card">
+          <h3>🤖 AI & Machine Learning</h3>
+          <div class="chips-container" id="chips-ai"></div>
+        </div>
+        <div class="section-card">
+          <h3>🔧 Backend & Database</h3>
+          <div class="chips-container" id="chips-backend"></div>
+        </div>
+        <div class="section-card">
+          <h3>🧰 Developer Tools</h3>
+          <div class="chips-container" id="chips-tools"></div>
+        </div>
+        <div class="section-card">
+          <h3>➕ Custom Technology</h3>
+          <div class="row">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" id="custom-tech-name" placeholder="e.g. Rust">
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="custom-tech-category">
+                <option value="Languages">Languages</option>
+                <option value="AI & ML">AI & ML</option>
+                <option value="Backend & Database">Backend & Database</option>
+                <option value="Developer Tools">Developer Tools</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label>Shields.io Logo (slug)</label>
+              <input type="text" id="custom-tech-logo" placeholder="e.g. rust">
+              <div class="hint">Find slugs at <a href="https://simpleicons.org" target="_blank" style="color:var(--accent)">simpleicons.org</a></div>
+            </div>
+            <div class="form-group">
+              <label>Badge Color (hex, no #)</label>
+              <input type="text" id="custom-tech-color" placeholder="e.g. DEA584">
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="addCustomTech()">+ Add Technology</button>
+        </div>
+      </div>
+
+      <!-- ═══ TAB: PROJECTS ════════════════════════════════════ -->
+      <div class="tab-content" id="tab-projects">
+        <div class="section-card">
+          <h3>🚀 Featured Projects <span class="badge" id="project-count">0</span></h3>
+          <div id="projects-list"></div>
+          <button class="btn btn-primary btn-sm" onclick="addProject()" style="margin-top:12px">+ Add Project</button>
+        </div>
+      </div>
+
+      <!-- ═══ TAB: HACKATHONS ══════════════════════════════════ -->
+      <div class="tab-content" id="tab-hackathons">
+        <div class="section-card">
+          <h3>🏆 Hackathons <span class="badge" id="hackathon-count">0</span></h3>
+          <div id="hackathons-list"></div>
+          <button class="btn btn-primary btn-sm" onclick="addHackathon()" style="margin-top:12px">+ Add Hackathon</button>
+        </div>
+      </div>
+
+      <!-- ═══ TAB: GOALS ═══════════════════════════════════════ -->
+      <div class="tab-content" id="tab-goals">
+        <div class="section-card">
+          <h3>🎯 Goals</h3>
+          <div id="goals-list"></div>
+          <button class="btn btn-primary btn-sm" onclick="addGoal()" style="margin-top:12px">+ Add Goal</button>
+        </div>
+      </div>
+
+      <!-- ═══ TAB: SETTINGS ════════════════════════════════════ -->
+      <div class="tab-content" id="tab-settings">
+        <div class="section-card">
+          <h3>🎨 Stats Theme</h3>
+          <div class="form-group">
+            <label>GitHub Stats Card Theme</label>
+            <select id="f-stats-theme">
+              <option value="tokyonight">Tokyo Night</option>
+              <option value="radical">Radical</option>
+              <option value="merko">Merko</option>
+              <option value="gruvbox">Gruvbox</option>
+              <option value="onedark">One Dark</option>
+              <option value="cobalt">Cobalt</option>
+              <option value="synthwave">Synthwave</option>
+              <option value="highcontrast">High Contrast</option>
+              <option value="dracula">Dracula</option>
+              <option value="algolia">Algolia</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="section-card">
+          <h3>👁️ Section Visibility</h3>
+          <div class="toggle-row">
+            <div class="toggle-label">
+              Show Snake Animation
+              <small>Contribution grid snake (requires GitHub Actions workflow)</small>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="f-show-snake" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-label">
+              Show GitHub Trophies
+              <small>Achievement trophies from github-profile-trophy</small>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="f-show-trophy" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <div class="toggle-label">
+              Show Metrics Workflow
+              <small>Advanced metrics (requires lowlighter/metrics setup)</small>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="f-show-metrics" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- .content -->
+  </main>
+</div>
+
+<!-- ─── PREVIEW PANEL ───────────────────────────────────────── -->
+<div class="preview-panel collapsed" id="preview-panel">
+  <div class="preview-header" onclick="togglePreview()">
+    <span>📋 Markdown Preview</span>
+    <span id="preview-toggle-icon">▲</span>
+  </div>
+  <div class="preview-content">
+    <pre id="preview-markdown">Click "📄 Download README.md" or expand this panel to see the generated markdown.</pre>
+  </div>
+</div>
+
+<!-- ─── TOAST ─────────────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
+
+<!-- ─── HIDDEN FILE INPUT ─────────────────────────────────── -->
+<input type="file" id="file-input" accept=".json" style="display:none" onchange="handleFileLoad(event)">
+
+<script>
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  TECH STACK DATABASE                                        ║
+// ║  Each tech maps to: logo (simpleicons slug), color, dark    ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+const TECH_DB = {
+  // Languages
+  "Python": { logo: "python", color: "3776AB", logoColor: "white", category: "Languages" },
+  "C": { logo: "c", color: "A8B9CC", logoColor: "black", category: "Languages" },
+  "C++": { logo: "cplusplus", color: "00599C", logoColor: "white", category: "Languages" },
+  "Java": { logo: "openjdk", color: "ED8B00", logoColor: "white", category: "Languages" },
+  "HTML5": { logo: "html5", color: "E34F26", logoColor: "white", category: "Languages" },
+  "CSS3": { logo: "css3", color: "1572B6", logoColor: "white", category: "Languages" },
+  "JavaScript": { logo: "javascript", color: "F7DF1E", logoColor: "black", category: "Languages" },
+  "TypeScript": { logo: "typescript", color: "3178C6", logoColor: "white", category: "Languages" },
+  "Rust": { logo: "rust", color: "000000", logoColor: "white", category: "Languages" },
+  "Go": { logo: "go", color: "00ADD8", logoColor: "white", category: "Languages" },
+  "Kotlin": { logo: "kotlin", color: "7F52FF", logoColor: "white", category: "Languages" },
+  "Swift": { logo: "swift", color: "F05138", logoColor: "white", category: "Languages" },
+  "R": { logo: "r", color: "276DC3", logoColor: "white", category: "Languages" },
+  "Dart": { logo: "dart", color: "0175C2", logoColor: "white", category: "Languages" },
+
+  // AI & ML
+  "TensorFlow": { logo: "tensorflow", color: "FF6F00", logoColor: "white", category: "AI & ML" },
+  "PyTorch": { logo: "pytorch", color: "EE4C2C", logoColor: "white", category: "AI & ML" },
+  "OpenAI": { logo: "openai", color: "412991", logoColor: "white", category: "AI & ML" },
+  "HuggingFace": { logo: "huggingface", color: "FFD21E", logoColor: "black", category: "AI & ML" },
+  "scikit-learn": { logo: "scikitlearn", color: "F7931E", logoColor: "white", category: "AI & ML" },
+  "Keras": { logo: "keras", color: "D00000", logoColor: "white", category: "AI & ML" },
+  "OpenCV": { logo: "opencv", color: "5C3EE8", logoColor: "white", category: "AI & ML" },
+  "LangChain": { logo: "langchain", color: "1C3C3C", logoColor: "white", category: "AI & ML" },
+  "NumPy": { logo: "numpy", color: "013243", logoColor: "white", category: "AI & ML" },
+  "Pandas": { logo: "pandas", color: "150458", logoColor: "white", category: "AI & ML" },
+
+  // Backend & Database
+  "FastAPI": { logo: "fastapi", color: "009688", logoColor: "white", category: "Backend & Database" },
+  "Node.js": { logo: "node.js", color: "339933", logoColor: "white", category: "Backend & Database" },
+  "Firebase": { logo: "firebase", color: "FFCA28", logoColor: "black", category: "Backend & Database" },
+  "MySQL": { logo: "mysql", color: "4479A1", logoColor: "white", category: "Backend & Database" },
+  "PostgreSQL": { logo: "postgresql", color: "4169E1", logoColor: "white", category: "Backend & Database" },
+  "MongoDB": { logo: "mongodb", color: "47A248", logoColor: "white", category: "Backend & Database" },
+  "Express": { logo: "express", color: "000000", logoColor: "white", category: "Backend & Database" },
+  "Django": { logo: "django", color: "092E20", logoColor: "white", category: "Backend & Database" },
+  "Flask": { logo: "flask", color: "000000", logoColor: "white", category: "Backend & Database" },
+  "Supabase": { logo: "supabase", color: "3FCF8E", logoColor: "white", category: "Backend & Database" },
+  "Redis": { logo: "redis", color: "DC382D", logoColor: "white", category: "Backend & Database" },
+  "AWS": { logo: "amazonaws", color: "232F3E", logoColor: "white", category: "Backend & Database" },
+
+  // Tools
+  "Git": { logo: "git", color: "F05032", logoColor: "white", category: "Developer Tools" },
+  "GitHub": { logo: "github", color: "181717", logoColor: "white", category: "Developer Tools" },
+  "Docker": { logo: "docker", color: "2496ED", logoColor: "white", category: "Developer Tools" },
+  "VS Code": { logo: "visual-studio-code", color: "007ACC", logoColor: "white", category: "Developer Tools" },
+  "Linux": { logo: "linux", color: "FCC624", logoColor: "black", category: "Developer Tools" },
+  "Figma": { logo: "figma", color: "F24E1E", logoColor: "white", category: "Developer Tools" },
+  "Postman": { logo: "postman", color: "FF6C37", logoColor: "white", category: "Developer Tools" },
+  "Vercel": { logo: "vercel", color: "000000", logoColor: "white", category: "Developer Tools" },
+  "Netlify": { logo: "netlify", color: "00C7B7", logoColor: "white", category: "Developer Tools" },
+  "Kubernetes": { logo: "kubernetes", color: "326CE5", logoColor: "white", category: "Developer Tools" },
+};
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  APPLICATION STATE                                          ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+let state = {
+  username: "bharatjidubey",
+  name: "Bharat Ji Dubey",
+  title: "B.Tech CSE (AI & ML) Undergraduate",
+  tagline: "Software Developer • AI Enthusiast",
+  bio: "Building AI-powered applications • Learning DSA in Python • Open to Software Development & AI/ML Internships",
+  typing_lines: [
+    "Software Developer",
+    "AI & Machine Learning Student",
+    "Building Real-World Projects",
+    "Open to Internship Opportunities"
+  ],
+  about: "I'm Bharat Ji Dubey, a B.Tech CSE (AI & ML) undergraduate at Chandigarh University (2025–2029). I enjoy building practical software, AI-powered applications, and modern web solutions while continuously improving my software engineering skills.",
+  quick_info: {
+    university: "Chandigarh University",
+    degree: "B.Tech CSE (AI & ML)",
+    location: "Uttar Pradesh, India",
+    looking_for: "Software Development & AI/ML Internships",
+    learning: "DSA in Python",
+    building: "AI Finance Manager"
+  },
+  tech_stack: {
+    "Languages": ["Python", "C", "Java", "HTML5", "CSS3", "JavaScript"],
+    "AI & ML": ["TensorFlow", "PyTorch", "OpenAI", "HuggingFace"],
+    "Backend & Database": ["FastAPI", "Node.js", "Firebase", "MySQL"],
+    "Developer Tools": ["Git", "GitHub", "Docker", "VS Code"]
+  },
+  projects: [
+    {
+      emoji: "🏋️",
+      name: "DEADRYX",
+      description: "A fitness platform that helps users track workouts, monitor progress, and preserve transformation memories.",
+      features: ["Google Authentication", "Google Drive Integration", "Workout Tracking", "Responsive Design"],
+      repo: "https://github.com/bharatjidubey/DEADRYX",
+      live: "https://deadryx.me",
+      status: "live"
+    },
+    {
+      emoji: "🤖",
+      name: "AI Finance Manager",
+      description: "An AI-powered finance application for expense tracking, budgeting, and financial insights.",
+      features: [],
+      repo: "",
+      live: "",
+      status: "in-development"
+    }
+  ],
+  hackathons: [
+    {
+      name: "Hack with Uttar Pradesh 2025",
+      emoji: "🥈",
+      placement: "Second Place",
+      description: "Built a freelancing platform connecting students and programmers with enterprise opportunities."
+    }
+  ],
+  certifications: [],
+  goals: [
+    "Build production-ready AI applications",
+    "Improve DSA skills",
+    "Contribute to Open Source",
+    "Secure an Internship"
+  ],
+  social: {
+    github: "https://github.com/bharatjidubey",
+    linkedin: "https://www.linkedin.com/in/bharatjid/",
+    email: "bharatjid021@gmail.com",
+    portfolio: ""
+  },
+  stats_theme: "tokyonight",
+  show_snake: true,
+  show_metrics: true,
+  show_trophy: true
+};
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  TAB NAVIGATION                                             ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+const tabTitles = {
+  personal: "👤 Personal Info",
+  techstack: "🛠️ Tech Stack",
+  projects: "🚀 Projects",
+  hackathons: "🏆 Hackathons",
+  goals: "🎯 Goals",
+  settings: "⚙️ Settings"
+};
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const tab = item.dataset.tab;
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    item.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('topbar-title').textContent = tabTitles[tab] || tab;
+  });
+});
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  POPULATE UI FROM STATE                                     ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function populateUI() {
+  // Personal
+  setValue('f-username', state.username);
+  setValue('f-name', state.name);
+  setValue('f-title', state.title);
+  setValue('f-tagline', state.tagline);
+  setValue('f-bio', state.bio);
+  setValue('f-about', state.about);
+  setValue('f-university', state.quick_info.university);
+  setValue('f-degree', state.quick_info.degree);
+  setValue('f-location', state.quick_info.location);
+  setValue('f-looking-for', state.quick_info.looking_for);
+  setValue('f-learning', state.quick_info.learning);
+  setValue('f-building', state.quick_info.building);
+  setValue('f-github', state.social.github);
+  setValue('f-linkedin', state.social.linkedin);
+  setValue('f-email', state.social.email);
+  setValue('f-portfolio', state.social.portfolio);
+
+  // Typing lines
+  renderTypingLines();
+
+  // Tech stack chips
+  renderChips();
+
+  // Projects
+  renderProjects();
+
+  // Hackathons
+  renderHackathons();
+
+  // Goals
+  renderGoals();
+
+  // Settings
+  setValue('f-stats-theme', state.stats_theme);
+  document.getElementById('f-show-snake').checked = state.show_snake;
+  document.getElementById('f-show-trophy').checked = state.show_trophy;
+  document.getElementById('f-show-metrics').checked = state.show_metrics;
+
+  updatePreview();
+}
+
+function setValue(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.value = val || '';
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  COLLECT STATE FROM UI                                      ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function collectState() {
+  state.username = val('f-username');
+  state.name = val('f-name');
+  state.title = val('f-title');
+  state.tagline = val('f-tagline');
+  state.bio = val('f-bio');
+  state.about = val('f-about');
+  state.quick_info.university = val('f-university');
+  state.quick_info.degree = val('f-degree');
+  state.quick_info.location = val('f-location');
+  state.quick_info.looking_for = val('f-looking-for');
+  state.quick_info.learning = val('f-learning');
+  state.quick_info.building = val('f-building');
+  state.social.github = val('f-github');
+  state.social.linkedin = val('f-linkedin');
+  state.social.email = val('f-email');
+  state.social.portfolio = val('f-portfolio');
+
+  // Typing lines
+  state.typing_lines = [];
+  document.querySelectorAll('.typing-line-input').forEach(inp => {
+    if (inp.value.trim()) state.typing_lines.push(inp.value.trim());
+  });
+
+  // Tech stack — collected from chip selections
+  state.tech_stack = { "Languages": [], "AI & ML": [], "Backend & Database": [], "Developer Tools": [] };
+  document.querySelectorAll('.chip.selected').forEach(chip => {
+    const cat = chip.dataset.category;
+    const name = chip.dataset.name;
+    if (state.tech_stack[cat]) state.tech_stack[cat].push(name);
+  });
+
+  // Projects
+  collectProjects();
+
+  // Hackathons
+  collectHackathons();
+
+  // Goals
+  state.goals = [];
+  document.querySelectorAll('.goal-input').forEach(inp => {
+    if (inp.value.trim()) state.goals.push(inp.value.trim());
+  });
+
+  // Settings
+  state.stats_theme = val('f-stats-theme');
+  state.show_snake = document.getElementById('f-show-snake').checked;
+  state.show_trophy = document.getElementById('f-show-trophy').checked;
+  state.show_metrics = document.getElementById('f-show-metrics').checked;
+}
+
+function val(id) { return (document.getElementById(id)?.value || '').trim(); }
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  TYPING LINES                                               ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function renderTypingLines() {
+  const container = document.getElementById('typing-lines-list');
+  container.innerHTML = '';
+  state.typing_lines.forEach((line, i) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;gap:8px;margin-bottom:8px;align-items:center;';
+    div.innerHTML = `
+      <input type="text" class="typing-line-input" value="${escHtml(line)}" placeholder="Typing line ${i+1}">
+      <button class="remove-btn" onclick="removeTypingLine(${i})">✕</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function addTypingLine() {
+  state.typing_lines.push('');
+  renderTypingLines();
+}
+
+function removeTypingLine(i) {
+  state.typing_lines.splice(i, 1);
+  renderTypingLines();
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  TECH STACK CHIPS                                           ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+const categoryMap = {
+  "Languages": "chips-languages",
+  "AI & ML": "chips-ai",
+  "Backend & Database": "chips-backend",
+  "Developer Tools": "chips-tools"
+};
+
+function renderChips() {
+  // Group TECH_DB by category
+  const grouped = {};
+  for (const [name, info] of Object.entries(TECH_DB)) {
+    const cat = info.category;
+    if (!grouped[cat]) grouped[cat] = [];
+    grouped[cat].push(name);
+  }
+
+  for (const [category, containerId] of Object.entries(categoryMap)) {
+    const container = document.getElementById(containerId);
+    if (!container) continue;
+    container.innerHTML = '';
+    const techs = grouped[category] || [];
+    techs.forEach(name => {
+      const info = TECH_DB[name];
+      const selected = (state.tech_stack[category] || []).includes(name);
+      const chip = document.createElement('div');
+      chip.className = 'chip' + (selected ? ' selected' : '');
+      chip.dataset.category = category;
+      chip.dataset.name = name;
+      chip.innerHTML = `<span class="dot" style="background:#${info.color}"></span> ${escHtml(name)}`;
+      chip.addEventListener('click', () => {
+        chip.classList.toggle('selected');
+      });
+      container.appendChild(chip);
+    });
+  }
+}
+
+function addCustomTech() {
+  const name = val('custom-tech-name');
+  const catSelect = document.getElementById('custom-tech-category');
+  const catDisplay = catSelect.value;
+  const logo = val('custom-tech-logo');
+  const color = val('custom-tech-color') || '333333';
+
+  if (!name) { showToast('Please enter a technology name', 'error'); return; }
+
+  // Map select value to internal category key
+  const catMap = { "Languages": "Languages", "AI & ML": "AI & ML", "Backend & Database": "Backend & Database", "Developer Tools": "Developer Tools" };
+  const category = catMap[catDisplay] || catDisplay;
+
+  TECH_DB[name] = { logo: logo || name.toLowerCase(), color, logoColor: "white", category };
+  renderChips();
+  // Re-select previously selected items
+  document.querySelectorAll('.chip').forEach(chip => {
+    const cat = chip.dataset.category;
+    const n = chip.dataset.name;
+    if ((state.tech_stack[cat] || []).includes(n)) {
+      chip.classList.add('selected');
+    }
+  });
+
+  // Auto-select the newly added tech
+  document.querySelectorAll(`.chip[data-name="${name}"]`).forEach(c => c.classList.add('selected'));
+
+  document.getElementById('custom-tech-name').value = '';
+  document.getElementById('custom-tech-logo').value = '';
+  document.getElementById('custom-tech-color').value = '';
+  showToast(`Added "${name}" to ${category}`, 'success');
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  PROJECTS                                                   ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function renderProjects() {
+  const container = document.getElementById('projects-list');
+  container.innerHTML = '';
+  document.getElementById('project-count').textContent = state.projects.length;
+
+  state.projects.forEach((proj, i) => {
+    const div = document.createElement('div');
+    div.className = 'list-item';
+    div.dataset.index = i;
+    div.innerHTML = `
+      <div class="list-item-header">
+        <h4><span>${escHtml(proj.emoji || '📦')}</span> ${escHtml(proj.name || 'New Project')}</h4>
+        <div class="list-item-actions">
+          <button class="remove-btn" onclick="removeProject(${i})" title="Remove">✕</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label>Emoji</label>
+          <input type="text" class="proj-emoji" value="${escHtml(proj.emoji)}" placeholder="🏋️">
+        </div>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="proj-name" value="${escHtml(proj.name)}" placeholder="Project Name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="proj-desc" rows="2" placeholder="Brief description...">${escHtml(proj.description)}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Features (comma-separated)</label>
+        <input type="text" class="proj-features" value="${escHtml((proj.features || []).join(', '))}" placeholder="Feature 1, Feature 2, ...">
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label>Repository URL</label>
+          <input type="url" class="proj-repo" value="${escHtml(proj.repo)}" placeholder="https://github.com/...">
+        </div>
+        <div class="form-group">
+          <label>Live URL</label>
+          <input type="url" class="proj-live" value="${escHtml(proj.live)}" placeholder="https://...">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <div class="status-select">
+          <span class="status-option ${proj.status === 'live' ? 'active-live' : ''}" onclick="setProjectStatus(${i}, 'live', this)">🟢 Live</span>
+          <span class="status-option ${proj.status === 'in-development' ? 'active-dev' : ''}" onclick="setProjectStatus(${i}, 'in-development', this)">🚧 In Development</span>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function addProject() {
+  state.projects.push({
+    emoji: "📦", name: "", description: "", features: [],
+    repo: "", live: "", status: "in-development"
+  });
+  renderProjects();
+}
+
+function removeProject(i) {
+  state.projects.splice(i, 1);
+  renderProjects();
+}
+
+function setProjectStatus(index, status, el) {
+  state.projects[index].status = status;
+  const parent = el.parentElement;
+  parent.querySelectorAll('.status-option').forEach(s => {
+    s.classList.remove('active-live', 'active-dev');
+  });
+  el.classList.add(status === 'live' ? 'active-live' : 'active-dev');
+}
+
+function collectProjects() {
+  const items = document.querySelectorAll('#projects-list .list-item');
+  state.projects = [];
+  items.forEach(item => {
+    const features = (item.querySelector('.proj-features')?.value || '')
+      .split(',').map(f => f.trim()).filter(Boolean);
+    state.projects.push({
+      emoji: item.querySelector('.proj-emoji')?.value || '📦',
+      name: item.querySelector('.proj-name')?.value || '',
+      description: item.querySelector('.proj-desc')?.value || '',
+      features,
+      repo: item.querySelector('.proj-repo')?.value || '',
+      live: item.querySelector('.proj-live')?.value || '',
+      status: state.projects[item.dataset.index]?.status || 'in-development'
+    });
+  });
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  HACKATHONS                                                 ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function renderHackathons() {
+  const container = document.getElementById('hackathons-list');
+  container.innerHTML = '';
+  document.getElementById('hackathon-count').textContent = state.hackathons.length;
+
+  state.hackathons.forEach((h, i) => {
+    const div = document.createElement('div');
+    div.className = 'list-item';
+    div.innerHTML = `
+      <div class="list-item-header">
+        <h4>${escHtml(h.emoji || '🏆')} ${escHtml(h.name || 'New Hackathon')}</h4>
+        <button class="remove-btn" onclick="removeHackathon(${i})">✕</button>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label>Emoji</label>
+          <input type="text" class="hack-emoji" value="${escHtml(h.emoji)}" placeholder="🥈">
+        </div>
+        <div class="form-group">
+          <label>Event Name</label>
+          <input type="text" class="hack-name" value="${escHtml(h.name)}" placeholder="Hack with UP 2025">
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label>Placement</label>
+          <input type="text" class="hack-placement" value="${escHtml(h.placement)}" placeholder="Second Place">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" class="hack-desc" value="${escHtml(h.description)}" placeholder="Built a freelancing platform...">
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function addHackathon() {
+  state.hackathons.push({ emoji: "🏆", name: "", placement: "", description: "" });
+  renderHackathons();
+}
+
+function removeHackathon(i) {
+  state.hackathons.splice(i, 1);
+  renderHackathons();
+}
+
+function collectHackathons() {
+  const items = document.querySelectorAll('#hackathons-list .list-item');
+  state.hackathons = [];
+  items.forEach(item => {
+    state.hackathons.push({
+      emoji: item.querySelector('.hack-emoji')?.value || '🏆',
+      name: item.querySelector('.hack-name')?.value || '',
+      placement: item.querySelector('.hack-placement')?.value || '',
+      description: item.querySelector('.hack-desc')?.value || ''
+    });
+  });
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  GOALS                                                      ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function renderGoals() {
+  const container = document.getElementById('goals-list');
+  container.innerHTML = '';
+  state.goals.forEach((goal, i) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'display:flex;gap:8px;margin-bottom:8px;align-items:center;';
+    div.innerHTML = `
+      <input type="text" class="goal-input" value="${escHtml(goal)}" placeholder="Goal ${i+1}">
+      <button class="remove-btn" onclick="removeGoal(${i})">✕</button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function addGoal() {
+  state.goals.push('');
+  renderGoals();
+}
+
+function removeGoal(i) {
+  state.goals.splice(i, 1);
+  renderGoals();
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  MARKDOWN GENERATOR                                         ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function generateReadme() {
+  collectState();
+  const d = state;
+  const u = d.username;
+  let md = '';
+
+  // Header comment
+  md += `<!-- ╔══════════════════════════════════════════════════════════════════╗ -->\n`;
+  md += `<!-- ║  GitHub Profile README — Auto-generated from profile-data.json  ║ -->\n`;
+  md += `<!-- ║  Use editor.html to make changes easily                         ║ -->\n`;
+  md += `<!-- ╚══════════════════════════════════════════════════════════════════╝ -->\n\n`;
+
+  // Header with capsule-render
+  const nameEncoded = encodeURIComponent(d.name);
+  const descEncoded = encodeURIComponent(d.title + ' • ' + d.tagline);
+  md += `<!-- SECTION: HEADER -->\n`;
+  md += `<div align="center">\n\n`;
+  md += `![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=${nameEncoded}&fontSize=42&fontColor=ffffff&fontAlignY=35&desc=${descEncoded}&descSize=16&descAlignY=55&animation=fadeIn)\n\n`;
+
+  // Typing SVG
+  if (d.typing_lines.length > 0) {
+    const lines = d.typing_lines.map(l => encodeURIComponent(l)).join(';');
+    md += `[![Typing SVG](https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=22&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=600&height=50&lines=${lines})](https://git.io/typing-svg)\n\n`;
+  }
+
+  md += `<br>\n\n`;
+
+  // Social badges
+  if (d.social.github) md += `<a href="${d.social.github}"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>&nbsp;\n`;
+  if (d.social.linkedin) md += `<a href="${d.social.linkedin}"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>&nbsp;\n`;
+  if (d.social.email) md += `<a href="mailto:${d.social.email}"><img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"></a>&nbsp;\n`;
+  if (d.social.portfolio) md += `<a href="${d.social.portfolio}"><img src="https://img.shields.io/badge/Portfolio-24292F?style=for-the-badge&logo=safari&logoColor=white" alt="Portfolio"></a>&nbsp;\n`;
+
+  md += `\n<br><br>\n\n`;
+  md += `![Profile Views](https://komarev.com/ghpvc/?username=${u}&style=for-the-badge&color=58A6FF)\n\n`;
+  md += `</div>\n\n---\n\n`;
+
+  // About Me
+  md += `<!-- SECTION: ABOUT -->\n`;
+  md += `## 🧑‍💻 About Me\n\n`;
+  md += `${d.about}\n\n`;
+  md += `<table>\n`;
+  const qiItems = [
+    ['🎓', 'University', d.quick_info.university],
+    ['📚', 'Degree', d.quick_info.degree],
+    ['📍', 'Location', d.quick_info.location],
+    ['💼', 'Looking For', d.quick_info.looking_for],
+    ['🌱', 'Learning', d.quick_info.learning],
+    ['🚀', 'Building', d.quick_info.building],
+  ];
+  qiItems.forEach(([emoji, label, value]) => {
+    if (value) md += `  <tr><td>${emoji} <strong>${label}</strong></td><td>${value}</td></tr>\n`;
+  });
+  md += `</table>\n\n---\n\n`;
+
+  // Tech Stack
+  md += `<!-- SECTION: TECH STACK -->\n`;
+  md += `## 🛠️ Tech Stack\n\n`;
+  md += `<div align="center">\n\n`;
+
+  const catLabels = {
+    "Languages": "Languages",
+    "AI & ML": "AI & Machine Learning",
+    "Backend & Database": "Backend & Database",
+    "Developer Tools": "Developer Tools"
+  };
+
+  for (const [cat, label] of Object.entries(catLabels)) {
+    const techs = d.tech_stack[cat] || [];
+    if (techs.length === 0) continue;
+    md += `#### ${label}\n\n`;
+    techs.forEach(name => {
+      const info = TECH_DB[name];
+      if (info) {
+        const displayName = name.replace(/ /g, '%20');
+        md += `![${name}](https://img.shields.io/badge/${displayName}-${info.color}?style=for-the-badge&logo=${info.logo}&logoColor=${info.logoColor})\n`;
+      } else {
+        md += `![${name}](https://img.shields.io/badge/${encodeURIComponent(name)}-333333?style=for-the-badge)\n`;
+      }
+    });
+    md += `\n`;
+  }
+
+  md += `</div>\n\n---\n\n`;
+
+  // Projects
+  if (d.projects.length > 0) {
+    md += `<!-- SECTION: PROJECTS -->\n`;
+    md += `## 🚀 Featured Projects\n\n`;
+
+    d.projects.forEach((p, i) => {
+      if (!p.name) return;
+      md += `### ${p.emoji} ${p.name}\n\n`;
+      md += `> ${p.description}\n\n`;
+
+      if (p.features && p.features.length > 0) {
+        p.features.forEach(f => { md += `- ✅ ${f}\n`; });
+        md += `\n`;
+      }
+
+      if (p.status === 'live') {
+        if (p.repo) md += `<a href="${p.repo}"><img src="https://img.shields.io/badge/📂_Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="Repository"></a>&nbsp;\n`;
+        if (p.live) md += `<a href="${p.live}"><img src="https://img.shields.io/badge/🌐_Live_Demo-00C853?style=for-the-badge" alt="Live Demo"></a>\n`;
+      } else {
+        md += `![Status](https://img.shields.io/badge/🚧_Under_Development-FFA000?style=for-the-badge)\n`;
+      }
+
+      if (i < d.projects.length - 1) md += `\n<br>\n`;
+      md += `\n`;
+    });
+
+    md += `---\n\n`;
+  }
+
+  // Hackathons
+  if (d.hackathons.length > 0) {
+    md += `<!-- SECTION: HACKATHONS -->\n`;
+    md += `## 🏆 Hackathons\n\n`;
+    md += `| Event | Placement | Description |\n`;
+    md += `|:------|:---------:|:------------|\n`;
+    d.hackathons.forEach(h => {
+      md += `| ${h.emoji} **${h.name}** | **${h.placement}** | ${h.description} |\n`;
+    });
+    md += `\n---\n\n`;
+  }
+
+  // GitHub Analytics
+  md += `<!-- SECTION: GITHUB ANALYTICS -->\n`;
+  md += `## 📊 GitHub Analytics\n\n`;
+  md += `<div align="center">\n\n`;
+  md += `<img height="180em" src="https://github-readme-stats.vercel.app/api?username=${u}&show_icons=true&theme=${d.stats_theme}&hide_border=true&bg_color=0D1117&title_color=58A6FF&icon_color=58A6FF&text_color=C9D1D9" alt="GitHub Stats" />\n`;
+  md += `&nbsp;&nbsp;\n`;
+  md += `<img height="180em" src="https://streak-stats.demolab.com?user=${u}&theme=${d.stats_theme}&hide_border=true&background=0D1117&ring=58A6FF&fire=58A6FF&currStreakLabel=58A6FF" alt="GitHub Streak" />\n\n`;
+  md += `<br><br>\n\n`;
+  md += `<img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=${u}&layout=compact&theme=${d.stats_theme}&hide_border=true&bg_color=0D1117&title_color=58A6FF&text_color=C9D1D9" alt="Top Languages" />\n\n`;
+  md += `</div>\n\n---\n\n`;
+
+  // Trophies
+  if (d.show_trophy) {
+    md += `<!-- SECTION: TROPHIES -->\n`;
+    md += `## 🏅 GitHub Trophies\n\n`;
+    md += `<div align="center">\n\n`;
+    md += `[![trophy](https://github-profile-trophy.vercel.app/?username=${u}&theme=algolia&no-frame=true&no-bg=true&margin-w=15&margin-h=15&column=7)](https://github.com/ryo-ma/github-profile-trophy)\n\n`;
+    md += `</div>\n\n---\n\n`;
+  }
+
+  // Snake
+  if (d.show_snake) {
+    md += `<!-- SECTION: SNAKE -->\n`;
+    md += `## 🐍 Contribution Snake\n\n`;
+    md += `<div align="center">\n\n`;
+    md += `<picture>\n`;
+    md += `  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/${u}/${u}/output/github-contribution-grid-snake-dark.svg" />\n`;
+    md += `  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/${u}/${u}/output/github-contribution-grid-snake.svg" />\n`;
+    md += `  <img alt="github contribution grid snake animation" src="https://raw.githubusercontent.com/${u}/${u}/output/github-contribution-grid-snake.svg" />\n`;
+    md += `</picture>\n\n`;
+    md += `</div>\n\n---\n\n`;
+  }
+
+  // Goals
+  if (d.goals.length > 0) {
+    md += `<!-- SECTION: GOALS -->\n`;
+    md += `## 🎯 Goals\n\n`;
+    const goalEmojis = ['🔭', '📈', '🌍', '💼', '🧠', '🎓', '⚡', '🔥'];
+    d.goals.forEach((g, i) => {
+      const emoji = goalEmojis[i % goalEmojis.length];
+      md += `- ${emoji} ${g}\n`;
+    });
+    md += `\n---\n\n`;
+  }
+
+  // Footer
+  md += `<!-- SECTION: FOOTER -->\n`;
+  md += `<div align="center">\n\n`;
+  md += `### Thanks for visiting my profile! 🙏\n\n`;
+  md += `If you like my work, consider ⭐ starring my repositories.\n\n`;
+  md += `![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer)\n\n`;
+  md += `</div>\n`;
+
+  return md;
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  FILE I/O                                                   ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function loadProfileData() {
+  document.getElementById('file-input').click();
+}
+
+function handleFileLoad(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+
+      // Normalize tech_stack keys from old format
+      if (data.tech_stack) {
+        const normalized = {};
+        for (const [key, val] of Object.entries(data.tech_stack)) {
+          if (key === "AI & ML" || key === "AI & Machine Learning") normalized["AI & ML"] = val;
+          else if (key === "Backend" || key === "Backend & Database") normalized["Backend & Database"] = val;
+          else if (key === "Tools" || key === "Developer Tools") normalized["Developer Tools"] = val;
+          else normalized[key] = val;
+        }
+        // Map old names to new names
+        for (const [cat, techs] of Object.entries(normalized)) {
+          normalized[cat] = techs.map(t => {
+            if (t === "HTML") return "HTML5";
+            if (t === "CSS") return "CSS3";
+            if (t === "Hugging Face") return "HuggingFace";
+            return t;
+          });
+        }
+        data.tech_stack = normalized;
+      }
+
+      state = { ...state, ...data };
+      populateUI();
+      showToast('Profile data loaded successfully!', 'success');
+    } catch (err) {
+      showToast('Invalid JSON file: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function downloadFile(filename, content) {
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function downloadReadme() {
+  const md = generateReadme();
+  downloadFile('README.md', md);
+  updatePreview();
+  showToast('README.md downloaded!', 'success');
+}
+
+function downloadProfileData() {
+  collectState();
+  const json = JSON.stringify(state, null, 2);
+  downloadFile('profile-data.json', json);
+  showToast('profile-data.json saved!', 'success');
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  PREVIEW                                                    ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function togglePreview() {
+  const panel = document.getElementById('preview-panel');
+  const icon = document.getElementById('preview-toggle-icon');
+  if (panel.classList.contains('collapsed')) {
+    panel.classList.remove('collapsed');
+    panel.classList.add('expanded');
+    icon.textContent = '▼';
+    updatePreview();
+  } else {
+    panel.classList.remove('expanded');
+    panel.classList.add('collapsed');
+    icon.textContent = '▲';
+  }
+}
+
+function updatePreview() {
+  const md = generateReadme();
+  document.getElementById('preview-markdown').textContent = md;
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  TOAST NOTIFICATIONS                                        ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  toast.textContent = (type === 'success' ? '✓ ' : '✕ ') + message;
+  toast.className = 'toast ' + type;
+  setTimeout(() => toast.classList.add('show'), 10);
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  UTILITIES                                                  ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+function escHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  INIT                                                       ║
+// ╚══════════════════════════════════════════════════════════════╝
+
+populateUI();
+</script>
+</body>
+</html>

@@ -1,95 +1,88 @@
 # GitHub Profile Setup Guide
 
-Welcome! This guide explains how to deploy and maintain your GitHub profile repository.
+## Quick Start
 
-## 1. Create the Profile Repository
+### 1. Create the Profile Repository
 
-Your profile repository **must** have the same name as your GitHub username.
-
-Example:
+Your profile repository **must** have the same name as your GitHub username:
 
 ```
 bharatjidubey
 ```
 
-Make it **Public** and initialize it with a README (or upload the provided one).
+Make it **Public** and initialize it with a README.
 
 ---
 
-## 2. Repository Structure
+### 2. Repository Structure
 
 ```
 bharatjidubey/
-├── README.md
-├── LICENSE
+├── README.md              ← What visitors see on your profile
+├── profile-data.json      ← All your personal data (edit this!)
+├── editor.html            ← Visual editor (double-click to open)
+├── banner.svg             ← Header banner graphic
 ├── .gitignore
+├── LICENSE
 ├── SETUP.md
 ├── CUSTOMIZATION.md
-├── assets/
-│   ├── banner.svg
-│   ├── project-images/
-│   └── certificates/
 └── .github/
     └── workflows/
+        ├── snake.yml      ← Contribution snake animation
+        └── metrics.yml    ← GitHub metrics dashboard
 ```
 
 ---
 
-## 3. Upload Files
+### 3. How to Make Changes
 
-Upload the generated files:
+**Option A — Visual Editor (Recommended)**
 
-- README.md
-- LICENSE
-- .gitignore
-- SETUP.md
-- CUSTOMIZATION.md
+1. Double-click `editor.html` to open it in your browser.
+2. Edit your details using the form fields.
+3. Click **"📂 Load profile-data.json"** to import your current data.
+4. Make your changes.
+5. Click **"💾 Save profile-data.json"** to download the updated data.
+6. Click **"📄 Download README.md"** to download the generated README.
+7. Replace the files in your repository and push.
 
-Later add:
+**Option B — Direct JSON Edit**
 
-- snake.yml
-- metrics.yml
-- banner.svg
+1. Open `profile-data.json` in VS Code.
+2. Edit the values you want to change.
+3. Open `editor.html` in your browser.
+4. Load the JSON → Download the new README.
+5. Push both files to GitHub.
 
 ---
 
-## 4. Pin Repositories
+### 4. Enable GitHub Actions
 
-Recommended order:
+The snake animation and metrics require GitHub Actions:
+
+1. Go to your repository on GitHub.
+2. Click **Settings** → **Actions** → **General**.
+3. Under "Workflow permissions", select **Read and write permissions**.
+4. Click **Save**.
+5. Go to the **Actions** tab and manually run both workflows once.
+
+---
+
+### 5. Pin Your Best Repositories
+
+Go to your GitHub profile and click **"Customize your pins"**. Recommended order:
 
 1. DEADRYX
 2. AI Finance Manager
-3. Portfolio
-4. DSA Python
-5. Machine Learning
-6. Hackathon Project
+3. Portfolio (when ready)
+4. DSA Python (when ready)
 
 ---
 
-## 5. Keep Your Profile Updated
+### 6. Keep It Updated
 
-- Push code regularly.
-- Update "Current Focus".
-- Add new certifications.
-- Replace placeholders with live links.
+- Push code regularly to keep the contribution graph green.
+- Update `profile-data.json` whenever you complete a project or earn a certification.
+- Re-run the editor to regenerate `README.md`.
 
----
-
-## 6. Daily Routine
-
-- Solve one DSA problem.
-- Push one GitHub commit.
-- Improve one project.
-- Learn one new concept.
-- Write clean documentation.
-
----
-
-## 7. Future Improvements
-
-- Portfolio Website
-- Resume
-- LinkedIn Branding
-- Open Source Contributions
-
-Happy coding!
+Happy coding! 🚀
