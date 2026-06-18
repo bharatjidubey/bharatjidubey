@@ -99,7 +99,7 @@ You can edit your profile details in the editor, and the editor will dynamically
 
 If you want to customize the design (colors, coordinates, layouts) manually:
 1. Open `banner.svg` or `footer.svg` in a text editor.
-2. Edit SVG tags like `<text>`, `<rect>`, `<path>`, colors (`#ff00cc`, `#9900ff`, `#00e5ff`, `#0d1117`), or coordinates.
+2. Edit SVG tags like `<text>`, `<rect>`, `<path>`, colors (`#ff00cc`, `#0d1117`), or coordinates.
 
 ---
 

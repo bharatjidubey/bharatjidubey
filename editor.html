@@ -1825,31 +1825,53 @@ function generateBannerSvg() {
   const d = state;
   const esc = (str) => escHtml(str).replace(/"/g, '&quot;');
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 200" width="100%">
-  <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ff00cc" />
-      <stop offset="50%" stop-color="#9900ff" />
-      <stop offset="100%" stop-color="#00e5ff" />
-    </linearGradient>
-    <style>
-      .wave {
-        fill: #0d1117;
+  // Custom tag extraction for the banner
+  const tags = [];
+  const categories = Object.keys(d.tech_stack);
+  for (const cat of categories) {
+    const techs = d.tech_stack[cat] || [];
+    techs.forEach(t => {
+      if (tags.length < 5 && !tags.includes(t)) {
+        tags.push(t);
       }
-      @media (prefers-color-scheme: light) {
-        .wave {
-          fill: #ffffff;
-        }
-      }
-    </style>
-  </defs>
-  <rect width="1200" height="200" fill="url(#grad)"/>
-  
-  <path class="wave" opacity="0.4" d="M0,150 C300,120 600,190 900,140 C1050,115 1150,145 1200,150 L1200,200 L0,200 Z" />
-  <path class="wave" opacity="0.25" d="M0,170 C200,150 400,190 700,150 C1000,110 1100,170 1200,160 L1200,200 L0,200 Z" />
-  <path class="wave" d="M0,185 C150,170 350,195 600,175 C850,155 1050,185 1200,180 L1200,200 L0,200 Z" />
-  
-  <text x="600" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="48" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">${esc(d.name)}</text>
+    });
+  }
+
+  const defaults = ["Python", "AI", "Web", "Cloud", "Git"];
+  while (tags.length < 5 && defaults.length > 0) {
+    const def = defaults.shift();
+    if (!tags.includes(def)) tags.push(def);
+  }
+
+  let tagX = 100;
+  let tagMarkup = '';
+  tags.forEach(tag => {
+    const textLen = tag.length;
+    const width = Math.max(75, textLen * 11 + 35);
+    const textX = tagX + (width / 2);
+    tagMarkup += `  <rect x="${tagX}" y="355" rx="18" ry="18" width="${width}" height="36" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>\n`;
+    tagMarkup += `  <text x="${textX}" y="379" font-size="18" font-family="Segoe UI, Arial, sans-serif" fill="#58a6ff" text-anchor="middle">${esc(tag)}</text>\n`;
+    tagX += width + 15;
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500">
+  <rect width="1500" height="500" fill="#0d1117"/>
+  <line x1="80" y1="90" x2="1420" y2="90" stroke="#30363d" stroke-width="2"/>
+  <line x1="80" y1="410" x2="1420" y2="410" stroke="#30363d" stroke-width="2"/>
+
+  <text x="100" y="170" font-size="54" font-family="Segoe UI, Arial, sans-serif" fill="#f0f6fc" font-weight="700">${esc(d.name)}</text>
+
+  <text x="100" y="220" font-size="28" font-family="Segoe UI, Arial, sans-serif" fill="#58a6ff">${esc(d.title)} • ${esc(d.tagline)}</text>
+
+  <text x="100" y="285" font-size="22" font-family="Segoe UI, Arial, sans-serif" fill="#c9d1d9">${esc(d.bio)}</text>
+
+  <text x="100" y="320" font-size="22" font-family="Segoe UI, Arial, sans-serif" fill="#8b949e">Learning ${esc(d.quick_info.learning || 'DSA')} • Backend Development • AI • Open to Internship Opportunities</text>
+
+${tagMarkup}
+  <circle cx="1290" cy="170" r="70" fill="none" stroke="#58a6ff" stroke-width="3"/>
+  <circle cx="1290" cy="170" r="40" fill="none" stroke="#30363d" stroke-width="2"/>
+  <line x1="1220" y1="170" x2="1360" y2="170" stroke="#58a6ff"/>
+  <line x1="1290" y1="100" x2="1290" y2="240" stroke="#58a6ff"/>
 </svg>`;
 }
 
