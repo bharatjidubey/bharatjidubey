@@ -158,12 +158,6 @@ I enjoy building practical software, AI-powered applications, and modern web sol
 <!-- SECTION: FOOTER -->
 <div align="center">
 
-### Thanks for visiting my profile! 🙏
-
-If you like my work, consider ⭐ starring my repositories.
-
-<br><br>
-
 <img src="footer.svg" alt="Footer Banner" width="100%">
 
 </div>
