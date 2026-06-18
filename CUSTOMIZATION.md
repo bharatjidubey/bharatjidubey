@@ -92,14 +92,14 @@ You can toggle these sections on/off in **Settings**:
 
 ---
 
-## Profile Banner
+## Profile Banner & Footer
 
-The `banner.svg` file is a custom SVG banner displayed at the top of your profile. 
-You can edit your profile details (Name, Title, Tagline, Bio, Tech Stack) in the editor, and the editor will dynamically compile a new `banner.svg` for you. Just click **"🎨 Download banner.svg"** in the editor and replace the existing `banner.svg` in your repository.
+The `banner.svg` and `footer.svg` files are custom SVG banners displayed at the top and bottom of your profile.
+You can edit your profile details in the editor, and the editor will dynamically compile them for you. Just click **"🎨 Download banner.svg"** and **"🎨 Download footer.svg"** in the editor, then replace the files in your repository.
 
 If you want to customize the design (colors, coordinates, layouts) manually:
-1. Open `banner.svg` in a text editor.
-2. Edit SVG tags like `<text>`, `<rect>`, colors (`#58a6ff`, `#0d1117`), or coordinates.
+1. Open `banner.svg` or `footer.svg` in a text editor.
+2. Edit SVG tags like `<text>`, `<rect>`, `<path>`, colors (`#ff00cc`, `#9900ff`, `#00e5ff`, `#0d1117`), or coordinates.
 
 ---
 

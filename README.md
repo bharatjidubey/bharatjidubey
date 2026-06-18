@@ -4,23 +4,19 @@
 <!-- ╚══════════════════════════════════════════════════════════════════╝ -->
 
 <!-- SECTION: HEADER -->
+<p align="right">
+  <img src="https://komarev.com/ghpvc/?username=bharatjidubey&label=Views&color=58A6FF&style=flat-square" alt="Views">
+</p>
+
 <div align="center">
 
 <img src="banner.svg" alt="Bharat Ji Dubey Banner" width="100%">
 
 <br>
 
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=22&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=600&height=50&lines=Software+Developer;AI+%26+Machine+Learning+Student;Building+Real-World+Projects;Open+to+Internship+Opportunities)](https://git.io/typing-svg)
-
-<br>
-
 <a href="https://github.com/bharatjidubey"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"></a>&nbsp;
 <a href="https://www.linkedin.com/in/bharatjid/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"></a>&nbsp;
 <a href="mailto:bharatjid021@gmail.com"><img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"></a>
-
-<br><br>
-
-![Profile Views](https://komarev.com/ghpvc/?username=bharatjidubey&style=for-the-badge&color=58A6FF)
 
 </div>
 
@@ -134,17 +130,6 @@ I enjoy building practical software, AI-powered applications, and modern web sol
 
 ---
 
-<!-- SECTION: ACTIVITY GRAPH -->
-## 📈 Contribution Graph
-
-<div align="center">
-
-[![Bharat's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=bharatjidubey&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=58A6FF&line=58A6FF&point=FFFFFF&area=true&area_color=58A6FF)](https://github.com/ashutosh00710/github-readme-activity-graph)
-
-</div>
-
----
-
 <!-- SECTION: SNAKE -->
 ## 🐍 Contribution Snake
 
@@ -176,5 +161,9 @@ I enjoy building practical software, AI-powered applications, and modern web sol
 ### Thanks for visiting my profile! 🙏
 
 If you like my work, consider ⭐ starring my repositories.
+
+<br><br>
+
+<img src="footer.svg" alt="Footer Banner" width="100%">
 
 </div>

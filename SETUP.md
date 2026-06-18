@@ -22,6 +22,7 @@ bharatjidubey/
 ├── profile-data.json      ← All your personal data (edit this!)
 ├── editor.html            ← Visual editor (double-click to open)
 ├── banner.svg             ← Header banner graphic
+├── footer.svg             ← Footer banner graphic
 ├── .gitignore
 ├── LICENSE
 ├── SETUP.md
@@ -44,8 +45,9 @@ bharatjidubey/
 4. Make your changes.
 5. Click **"💾 Save profile-data.json"** to download the updated data.
 6. Click **"📄 Download README.md"** to download the generated README.
-7. Click **"🎨 Download banner.svg"** to download the generated banner image (if you edited your name, title, or tagline).
-8. Replace the files in your repository and push to GitHub.
+7. Click **"🎨 Download banner.svg"** to download the generated header banner.
+8. Click **"🎨 Download footer.svg"** to download the matching footer banner.
+9. Replace the files in your repository and push to GitHub.
 
 **Option B — Direct JSON Edit**
 

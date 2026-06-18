@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" width="100%">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff00cc" />
+      <stop offset="50%" stop-color="#9900ff" />
+      <stop offset="100%" stop-color="#00e5ff" />
+    </linearGradient>
+    <style>
+      .wave {
+        fill: #0d1117;
+      }
+      @media (prefers-color-scheme: light) {
+        .wave {
+          fill: #ffffff;
+        }
+      }
+    </style>
+  </defs>
+  <rect width="1200" height="120" fill="url(#grad)"/>
+  
+  <path class="wave" opacity="0.4" d="M0,0 L1200,0 L1200,40 C1050,45 950,15 900,20 C600,70 300,0 0,50 Z" />
+  <path class="wave" opacity="0.25" d="M0,0 L1200,0 L1200,30 C1100,40 1000,10 700,50 C400,10 200,50 0,25 Z" />
+  <path class="wave" d="M0,0 L1200,0 L1200,15 C1050,20 850,5 600,25 C350,5 150,30 0,20 Z" />
+</svg>
