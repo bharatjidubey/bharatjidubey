@@ -132,12 +132,12 @@ I enjoy building practical software, AI-powered applications, and modern web sol
 
 ---
 
-<!-- SECTION: TROPHIES -->
-## 🏅 GitHub Trophies
+<!-- SECTION: ACTIVITY GRAPH -->
+## 📈 Contribution Graph
 
 <div align="center">
 
-[![trophy](https://github-profile-trophy.vercel.app/?username=bharatjidubey&theme=algolia&no-frame=true&no-bg=true&margin-w=15&margin-h=15&column=7)](https://github.com/ryo-ma/github-profile-trophy)
+[![Bharat's github activity graph](https://github-readme-activity-graph.vercel.app/graph?username=bharatjidubey&theme=tokyo-night&hide_border=true&bg_color=0D1117&color=58A6FF&line=58A6FF&point=FFFFFF&area=true&area_color=58A6FF)](https://github.com/ashutosh00710/github-readme-activity-graph)
 
 </div>
 
