@@ -44,7 +44,8 @@ bharatjidubey/
 4. Make your changes.
 5. Click **"💾 Save profile-data.json"** to download the updated data.
 6. Click **"📄 Download README.md"** to download the generated README.
-7. Replace the files in your repository and push.
+7. Click **"🎨 Download banner.svg"** to download the generated banner image (if you edited your name, title, or tagline).
+8. Replace the files in your repository and push to GitHub.
 
 **Option B — Direct JSON Edit**
 

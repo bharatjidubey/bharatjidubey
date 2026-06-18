@@ -232,6 +232,18 @@
       box-shadow: 0 0 20px rgba(63, 185, 80, 0.25);
     }
 
+    .btn-banner {
+      background: #6366f1;
+      color: #fff;
+      border-color: #6366f1;
+    }
+
+    .btn-banner:hover {
+      background: #4f46e5;
+      border-color: #4f46e5;
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.25);
+    }
+
     .btn-danger {
       background: transparent;
       color: var(--danger);
@@ -725,6 +737,7 @@
     <div class="sidebar-actions">
       <button class="btn btn-secondary btn-block" onclick="loadProfileData()">📂 Load profile-data.json</button>
       <button class="btn btn-primary btn-block" onclick="downloadReadme()">📄 Download README.md</button>
+      <button class="btn btn-banner btn-block" onclick="downloadBanner()">🎨 Download banner.svg</button>
       <button class="btn btn-success btn-block" onclick="downloadProfileData()">💾 Save profile-data.json</button>
     </div>
   </aside>
@@ -736,6 +749,7 @@
       <div class="topbar-actions">
         <button class="btn btn-secondary btn-sm" onclick="loadProfileData()">📂 Load JSON</button>
         <button class="btn btn-primary btn-sm" onclick="downloadReadme()">📄 README</button>
+        <button class="btn btn-banner btn-sm" onclick="downloadBanner()">🎨 Banner</button>
         <button class="btn btn-success btn-sm" onclick="downloadProfileData()">💾 Save</button>
       </div>
     </div>
@@ -1584,12 +1598,10 @@ function generateReadme() {
   md += `<!-- ║  Use editor.html to make changes easily                         ║ -->\n`;
   md += `<!-- ╚══════════════════════════════════════════════════════════════════╝ -->\n\n`;
 
-  // Header with capsule-render
-  const nameEncoded = encodeURIComponent(d.name);
-  const descEncoded = encodeURIComponent(d.title + ' • ' + d.tagline);
+  // Header with local banner.svg
   md += `<!-- SECTION: HEADER -->\n`;
   md += `<div align="center">\n\n`;
-  md += `![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=${nameEncoded}&fontSize=42&fontColor=ffffff&fontAlignY=35&desc=${descEncoded}&descSize=16&descAlignY=55&animation=fadeIn)\n\n`;
+  md += `<img src="banner.svg" alt="${d.name} Banner" width="100%">\n\n`;
 
   // Typing SVG
   if (d.typing_lines.length > 0) {
@@ -1748,7 +1760,6 @@ function generateReadme() {
   md += `<div align="center">\n\n`;
   md += `### Thanks for visiting my profile! 🙏\n\n`;
   md += `If you like my work, consider ⭐ starring my repositories.\n\n`;
-  md += `![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer)\n\n`;
   md += `</div>\n`;
 
   return md;
@@ -1813,6 +1824,67 @@ function downloadFile(filename, content) {
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
+}
+
+function generateBannerSvg() {
+  collectState();
+  const d = state;
+  const esc = (str) => escHtml(str).replace(/"/g, '&quot;');
+  
+  // Custom tag extraction for the banner
+  const tags = [];
+  const categories = Object.keys(d.tech_stack);
+  for (const cat of categories) {
+    const techs = d.tech_stack[cat] || [];
+    techs.forEach(t => {
+      if (tags.length < 5 && !tags.includes(t)) {
+        tags.push(t);
+      }
+    });
+  }
+  
+  const defaults = ["Python", "AI", "Web", "Cloud", "Git"];
+  while (tags.length < 5 && defaults.length > 0) {
+    const def = defaults.shift();
+    if (!tags.includes(def)) tags.push(def);
+  }
+  
+  let tagX = 100;
+  let tagMarkup = '';
+  tags.forEach(tag => {
+    const textLen = tag.length;
+    const width = Math.max(75, textLen * 11 + 35);
+    const textX = tagX + (width / 2);
+    tagMarkup += `  <rect x="${tagX}" y="355" rx="18" ry="18" width="${width}" height="36" fill="#161b22" stroke="#58a6ff" stroke-width="1.5"/>\n`;
+    tagMarkup += `  <text x="${textX}" y="379" font-size="16" font-family="Segoe UI, Arial, sans-serif" fill="#58a6ff" text-anchor="middle" font-weight="600">${esc(tag)}</text>\n`;
+    tagX += width + 15;
+  });
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500">
+  <rect width="1500" height="500" fill="#0d1117"/>
+  <line x1="80" y1="90" x2="1420" y2="90" stroke="#30363d" stroke-width="2"/>
+  <line x1="80" y1="410" x2="1420" y2="410" stroke="#30363d" stroke-width="2"/>
+
+  <text x="100" y="170" font-size="54" font-family="Segoe UI, Arial, sans-serif" fill="#f0f6fc" font-weight="700">${esc(d.name)}</text>
+
+  <text x="100" y="220" font-size="28" font-family="Segoe UI, Arial, sans-serif" fill="#58a6ff">${esc(d.title)} • ${esc(d.tagline)}</text>
+
+  <text x="100" y="285" font-size="22" font-family="Segoe UI, Arial, sans-serif" fill="#c9d1d9">${esc(d.bio)}</text>
+
+  <text x="100" y="320" font-size="22" font-family="Segoe UI, Arial, sans-serif" fill="#8b949e">Learning ${esc(d.quick_info.learning || 'DSA')} • Building ${esc(d.quick_info.building || 'Projects')} • Open to Internships</text>
+
+${tagMarkup}
+  <circle cx="1290" cy="170" r="70" fill="none" stroke="#58a6ff" stroke-width="3"/>
+  <circle cx="1290" cy="170" r="40" fill="none" stroke="#30363d" stroke-width="2"/>
+  <line x1="1220" y1="170" x2="1360" y2="170" stroke="#58a6ff"/>
+  <line x1="1290" y1="100" x2="1290" y2="240" stroke="#58a6ff"/>
+</svg>`;
+}
+
+function downloadBanner() {
+  const svg = generateBannerSvg();
+  downloadFile('banner.svg', svg);
+  showToast('banner.svg downloaded!', 'success');
 }
 
 function downloadReadme() {

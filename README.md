@@ -6,7 +6,9 @@
 <!-- SECTION: HEADER -->
 <div align="center">
 
-![Header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=200&section=header&text=Bharat%20Ji%20Dubey&fontSize=42&fontColor=ffffff&fontAlignY=35&desc=B.Tech%20CSE%20(AI%20%26%20ML)%20%E2%80%A2%20Software%20Developer%20%E2%80%A2%20AI%20Enthusiast&descSize=16&descAlignY=55&animation=fadeIn)
+<img src="banner.svg" alt="Bharat Ji Dubey Banner" width="100%">
+
+<br>
 
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Inter&weight=600&size=22&duration=3000&pause=1000&color=58A6FF&center=true&vCenter=true&width=600&height=50&lines=Software+Developer;AI+%26+Machine+Learning+Student;Building+Real-World+Projects;Open+to+Internship+Opportunities)](https://git.io/typing-svg)
 
@@ -174,7 +176,5 @@ I enjoy building practical software, AI-powered applications, and modern web sol
 ### Thanks for visiting my profile! 🙏
 
 If you like my work, consider ⭐ starring my repositories.
-
-![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer)
 
 </div>

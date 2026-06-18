@@ -87,20 +87,19 @@ Change the theme in **Settings** tab → **Stats Theme**.
 You can toggle these sections on/off in **Settings**:
 
 - **Snake Animation** — The contribution graph snake
-- **GitHub Trophies** — Achievement badges
+- **Activity Graph** — Contribution graph over time
 - **Metrics Workflow** — Advanced GitHub metrics
 
 ---
 
 ## Profile Banner
 
-The `banner.svg` file contains a custom SVG banner. You can edit it in any text editor or SVG editor to change:
-- Name text
-- Title/subtitle
-- Accent color (currently `#58A6FF`)
-- Background color (currently `#0D1117`)
+The `banner.svg` file is a custom SVG banner displayed at the top of your profile. 
+You can edit your profile details (Name, Title, Tagline, Bio, Tech Stack) in the editor, and the editor will dynamically compile a new `banner.svg` for you. Just click **"🎨 Download banner.svg"** in the editor and replace the existing `banner.svg` in your repository.
 
-> **Note:** The current README uses `capsule-render` for the header instead of the banner SVG. You can switch to the banner by editing the README manually if preferred.
+If you want to customize the design (colors, coordinates, layouts) manually:
+1. Open `banner.svg` in a text editor.
+2. Edit SVG tags like `<text>`, `<rect>`, colors (`#58a6ff`, `#0d1117`), or coordinates.
 
 ---
 
