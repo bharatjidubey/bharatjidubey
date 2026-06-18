@@ -1,38 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="500" viewBox="0 0 1500 500">
-  <rect width="1500" height="500" fill="#0d1117"/>
-  <line x1="80" y1="90" x2="1420" y2="90" stroke="#30363d" stroke-width="2"/>
-  <line x1="80" y1="410" x2="1420" y2="410" stroke="#30363d" stroke-width="2"/>
-
-  <text x="100" y="170" font-size="54" font-family="Segoe UI, Arial, sans-serif" fill="#f0f6fc" font-weight="700">
-    Bharat Ji Dubey
-  </text>
-
-  <text x="100" y="220" font-size="28" font-family="Segoe UI, Arial, sans-serif" fill="#58a6ff">
-    B.Tech CSE (AI &amp; ML) Undergraduate • Software Developer
-  </text>
-
-  <text x="100" y="285" font-size="22" font-family="Segoe UI, Arial, sans-serif" fill="#c9d1d9">
-    Building AI-powered applications through practical software engineering.
-  </text>
-
-  <text x="100" y="320" font-size="22" font-family="Segoe UI, Arial, sans-serif" fill="#8b949e">
-    Learning DSA • Backend Development • AI • Open to Internship Opportunities
-  </text>
-
-  <rect x="100" y="355" rx="18" ry="18" width="110" height="36" fill="#161b22" stroke="#58a6ff"/>
-  <text x="155" y="379" font-size="18" font-family="Segoe UI, Arial, sans-serif" fill="#58a6ff" text-anchor="middle">Python</text>
-
-  <rect x="225" y="355" rx="18" ry="18" width="80" height="36" fill="#161b22" stroke="#58a6ff"/>
-  <text x="265" y="379" font-size="18" font-family="Segoe UI, Arial, sans-serif" fill="#58a6ff" text-anchor="middle">AI</text>
-
-  <rect x="320" y="355" rx="18" ry="18" width="95" height="36" fill="#161b22" stroke="#58a6ff"/>
-  <text x="367" y="379" font-size="18" font-family="Segoe UI, Arial, sans-serif" fill="#58a6ff" text-anchor="middle">Web</text>
-
-  <rect x="430" y="355" rx="18" ry="18" width="100" height="36" fill="#161b22" stroke="#58a6ff"/>
-  <text x="480" y="379" font-size="18" font-family="Segoe UI, Arial, sans-serif" fill="#58a6ff" text-anchor="middle">Cloud</text>
-
-  <circle cx="1290" cy="170" r="70" fill="none" stroke="#58a6ff" stroke-width="3"/>
-  <circle cx="1290" cy="170" r="40" fill="none" stroke="#30363d" stroke-width="2"/>
-  <line x1="1220" y1="170" x2="1360" y2="170" stroke="#58a6ff"/>
-  <line x1="1290" y1="100" x2="1290" y2="240" stroke="#58a6ff"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 854 200" width="100%" style="z-index:1;position:relative">
+  <style>
+    .text {
+      font-size: 42px;
+      font-weight: 700;
+      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    }
+    .desc {
+      font-size: 16px;
+      font-weight: 500;
+      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    }
+    .text, .desc {
+      animation: fadeIn 1.2s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+  <defs>
+    <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4568dc"/>
+      <stop offset="100%" stop-color="#b06ab3"/>
+    </linearGradient>
+  </defs>
+  
+  <g transform="translate(427, 100) scale(1, 1) translate(-427, -100)">
+    <path fill="url(#linear)" opacity="0.4">
+      <animate
+        attributeName="d"
+        dur="20s"
+        repeatCount="indefinite"
+        keyTimes="0;0.333;0.667;1"
+        calcMode="spline"
+        keySplines="0.2 0 0.2 1;0.2 0 0.2 1;0.2 0 0.2 1"
+        begin="0s"
+        values="M0 0L 0 120Q 213.5 160 427 130T 854 155L 854 0 Z;M0 0L 0 145Q 213.5 160 427 140T 854 130L 854 0 Z;M0 0L 0 165Q 213.5 135 427 165T 854 130L 854 0 Z;M0 0L 0 120Q 213.5 160 427 130T 854 155L 854 0 Z"
+      />
+    </path>
+    <path fill="url(#linear)" opacity="0.4">
+      <animate
+        attributeName="d"
+        dur="20s"
+        repeatCount="indefinite"
+        keyTimes="0;0.333;0.667;1"
+        calcMode="spline"
+        keySplines="0.2 0 0.2 1;0.2 0 0.2 1;0.2 0 0.2 1"
+        begin="-10s"
+        values="M0 0L 0 135Q 213.5 180 427 150T 854 160L 854 0 Z;M0 0L 0 150Q 213.5 120 427 120T 854 140L 854 0 Z;M0 0L 0 145Q 213.5 125 427 150T 854 165L 854 0 Z;M0 0L 0 135Q 213.5 180 427 150T 854 160L 854 0 Z"
+      />
+    </path>
+  </g>
+  <text text-anchor="middle" dominant-baseline="middle" x="50%" y="35%" class="text" style="fill:#ffffff;" stroke="none" stroke-width="1">Bharat Ji Dubey</text>
+  <text text-anchor="middle" dominant-baseline="middle" x="50%" y="55%" class="desc" style="fill:#ffffff;">B.Tech CSE (AI &amp; ML) • Software Developer • AI Enthusiast</text>
 </svg>

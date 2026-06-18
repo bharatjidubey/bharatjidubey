@@ -1,27 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 220" width="100%">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 854 200" width="100%" style="z-index:1;position:relative">
+  <style>
+    .text {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    }
+    .desc {
+      font-size: 16px;
+      font-weight: 500;
+      font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+    }
+    .text, .desc {
+      animation: fadeIn 1.2s ease-in-out forwards;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
   <defs>
-    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ff00cc" />
-      <stop offset="50%" stop-color="#9900ff" />
-      <stop offset="100%" stop-color="#00e5ff" />
+    <linearGradient id="linear" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#4568dc"/>
+      <stop offset="100%" stop-color="#b06ab3"/>
     </linearGradient>
-    <style>
-      .wave {
-        fill: #0d1117;
-      }
-      @media (prefers-color-scheme: light) {
-        .wave {
-          fill: #ffffff;
-        }
-      }
-    </style>
   </defs>
-  <rect width="1200" height="220" fill="url(#grad)"/>
   
-  <path class="wave" opacity="0.4" d="M0,0 L1200,0 L1200,60 C1050,65 950,25 900,30 C600,105 300,0 0,75 Z" />
-  <path class="wave" opacity="0.25" d="M0,0 L1200,0 L1200,45 C1100,60 1000,15 700,75 C400,15 200,75 0,35 Z" />
-  <path class="wave" d="M0,0 L1200,0 L1200,22 C1050,30 850,7 600,37 C350,7 150,45 0,30 Z" />
-
-  <text x="600" y="130" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="32" font-weight="bold" fill="#ffffff" text-anchor="middle">Thanks for visiting my profile! 🙏</text>
-  <text x="600" y="175" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="20" fill="#ffffff" opacity="0.9" text-anchor="middle">If you like my work, consider ⭐ starring my repositories.</text>
+  <g transform="translate(427, 100) scale(1, -1) translate(-427, -100)">
+    <path fill="url(#linear)" opacity="0.4">
+      <animate
+        attributeName="d"
+        dur="20s"
+        repeatCount="indefinite"
+        keyTimes="0;0.333;0.667;1"
+        calcMode="spline"
+        keySplines="0.2 0 0.2 1;0.2 0 0.2 1;0.2 0 0.2 1"
+        begin="0s"
+        values="M0 0L 0 120Q 213.5 160 427 130T 854 155L 854 0 Z;M0 0L 0 145Q 213.5 160 427 140T 854 130L 854 0 Z;M0 0L 0 165Q 213.5 135 427 165T 854 130L 854 0 Z;M0 0L 0 120Q 213.5 160 427 130T 854 155L 854 0 Z"
+      />
+    </path>
+    <path fill="url(#linear)" opacity="0.4">
+      <animate
+        attributeName="d"
+        dur="20s"
+        repeatCount="indefinite"
+        keyTimes="0;0.333;0.667;1"
+        calcMode="spline"
+        keySplines="0.2 0 0.2 1;0.2 0 0.2 1;0.2 0 0.2 1"
+        begin="-10s"
+        values="M0 0L 0 135Q 213.5 180 427 150T 854 160L 854 0 Z;M0 0L 0 150Q 213.5 120 427 120T 854 140L 854 0 Z;M0 0L 0 145Q 213.5 125 427 150T 854 165L 854 0 Z;M0 0L 0 135Q 213.5 180 427 150T 854 160L 854 0 Z"
+      />
+    </path>
+  </g>
+  <text text-anchor="middle" dominant-baseline="middle" x="50%" y="65%" class="text" style="fill:#ffffff;" stroke="none" stroke-width="1">Thanks for visiting my profile! 🙏</text>
+  <text text-anchor="middle" dominant-baseline="middle" x="50%" y="80%" class="desc" style="fill:#ffffff;">If you like my work, consider ⭐ starring my repositories.</text>
 </svg>
